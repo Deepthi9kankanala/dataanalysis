@@ -1,0 +1,255 @@
+1.The average price of diamonds with a carat weight greater than 1?
+
+SELECT AVG(price) AS avg_price
+FROM task2.diamonds
+WHERE carat > 1;
+
+output:
+avg_price
+8426.8906
+---------------------------------------------------------------------
+2.Which cut type has the highest average price?
+
+SELECT cut, AVG(price) AS avg_price
+FROM task2.diamonds
+GROUP BY cut
+ORDER BY avg_price DESC
+LIMIT 1;
+
+output:
+
+cut  avg_price
+Fair	4559.3620
+---------------------------------------------------------------------------------
+
+3.What is the most common color grade for diamonds with a price greater than $5000?
+
+
+SELECT color, COUNT(*) AS count
+FROM task2.diamonds
+WHERE price > 5000
+GROUP BY color
+ORDER BY count DESC
+LIMIT 1;
+
+output:
+color  count
+G            1658
+
+
+---------------------------------------------------------
+
+4.How many diamonds are in the dataset with a carat weight between 1 and 3?
+
+SELECT COUNT(*) AS count
+FROM task2.diamonds
+WHERE carat BETWEEN 1 AND 3;
+output:
+
+count
+9273
+
+---------------------------------------------------
+5.the highest price diamond for each cut category.
+
+SELECT cut, MAX(price) AS max_price
+FROM task2.diamonds
+GROUP BY cut;
+
+
+output:
+
+cut    max_price
+Ideal	18804
+Premium	18795
+Very Good	18818
+Good	18707
+Fair	18574
+
+
+------------------------------------------------------------------
+6.Count the number of diamonds with each clarity grade.
+
+SELECT clarity, COUNT(*) AS count
+FROM task2.diamonds
+GROUP BY clarity;
+
+
+output:
+clarity   count
+IF	874
+VVS2	2479
+VS1	3991
+VVS1	1791
+VS2	5925
+SI2	4447
+I1	355
+
+----------------------------------------------------------------
+7.Calculate the average price of diamonds for each combination of cut, color, and clarity
+
+SELECT cut, color, clarity, AVG(price) AS avg_price
+FROM task2.diamonds
+GROUP BY cut, color, clarity;
+------------------------------------------------------------------------
+8.he highest and lowest prices of diamonds in the dataset.
+
+SELECT MAX(price) AS highest_price, MIN(price) AS lowest_price
+FROM task2.diamonds;
+
+output:
+highest_price   lowest_price
+18818                     326
+
+------------------------------------------------------------
+9.the average price for each color grade
+
+
+SELECT color, AVG(price) AS avg_price
+FROM task2.diamonds
+GROUP BY color;
+
+
+output:
+
+color      avg_price
+
+E	3080.8709
+G	4008.8059
+F	3691.6993
+D	3187.1937
+H	4482.4818
+J	5307.1556
+I	5139.1973
+
+-------------------------------------------------------------
+
+10.The number of diamonds with a clarity of VS1
+
+
+SELECT COUNT(*) AS count
+FROM task2.diamonds
+WHERE clarity = 'VS1';
+
+
+output:
+
+count 
+3991
+-----------------------------------------------------
+11.The highest price of diamonds with a Very Good cut
+
+SELECT MAX(price) AS max_price
+FROM task2.diamonds
+WHERE cut = 'Very Good';
+
+
+output:
+max_price
+18818
+
+----------------------------------------------
+12.The total carat weight of diamonds with a color grade of E
+
+SELECT SUM(carat) AS total_
+FROM task2.diamonds
+WHERE color = 'E';
+
+
+output:
+total_
+3149.249999
+
+----------------------------------------------------
+13.The diamond with the highest price-per-carat ratio
+
+SELECT *, (price / carat) AS price_per_carat
+FROM task2.diamonds
+ORDER BY price_per_carat DESC
+LIMIT 1;
+
+
+output:
+carat          cut                                 color             clarity          depth                 tableee x     y         z       price 
+1.07	Very Good	D	IF	60.9	58	6.57	6.67	4.03	18114	16928.97113274778
+--------------------------------------------------------------------------------------------------------------------------------
+14.The number of diamonds with a cut grade of Ideal and a clarity grade of IF
+
+SELECT COUNT(*) AS count
+FROM task2.diamonds
+WHERE cut = 'Ideal' AND clarity = 'IF';
+
+
+outpur:
+
+count '602
+----------------------------------------------------------------------------------
+15.the average price for diamonds with a clarity grade of  VS2  and a color grade of  G
+
+SELECT AVG(price) AS avg_price
+FROM task2.diamonds
+WHERE clarity = 'VS2' AND color = 'G';
+
+
+output:
+
+4509.3483
+
+================================================================================
+
+16.Rather than finding the highest and lowest seperately, you can have a table which has the numbers for each categories so that we can understand the highest and lowest
+
+SELECT 
+    'Cut' AS category, 
+    cut AS value, 
+    MAX(price) AS highest_price, 
+    MIN(price) AS lowest_price
+FROM task2.diamonds
+GROUP BY cut
+
+UNION ALL
+
+SELECT 
+    'Color' AS category, 
+    color AS value, 
+    MAX(price) AS highest_price, 
+    MIN(price) AS lowest_price
+FROM task2.diamonds
+GROUP BY color
+
+UNION ALL
+
+SELECT 
+    'Clarity' AS category, 
+    clarity AS value, 
+    MAX(price) AS highest_price, 
+    MIN(price) AS lowest_price
+FROM task2.diamonds
+GROUP BY clarity
+
+UNION ALL
+
+SELECT 
+    'Cut, Color, Clarity' AS category, 
+    CONCAT(cut, ', ', color, ', ', clarity) AS value, 
+    MAX(price) AS highest_price, 
+    MIN(price) AS lowest_price
+FROM task2.diamonds
+GROUP BY cut, color, clarity;
+
+=====================================================
+
+Data Visualization:
+
+1.What is the distribution of carat weights ?
+2.Is there a relationship between the price and the carat weight of the diamonds?
+3. How does the price vary across different cut grades?
+4.What is the price distribution among different color grades?
+5.How does the price vary among different clarity grades?
+6.Color and Clarity Combination with the Highest Average Price?
+7.he relationships between carat ,price,depth # pair plot
+8.Histogram for the distribution of prices.
+9.Boxplot : relationship between depth and price.
+10.Does the depth of the diamond affect its price?
+11.How does the price distribution vary across different ranges of carat weights?
+
